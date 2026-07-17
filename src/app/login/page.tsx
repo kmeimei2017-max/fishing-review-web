@@ -1,6 +1,8 @@
 import { redirect } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
 import { LoginButtons } from '@/components/auth/login-buttons'
+import { EmailLoginForm } from '@/components/auth/email-login-form'
 import { createClient } from '@/lib/supabase/server'
 
 interface LoginPageProps {
@@ -34,8 +36,16 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
             소셜 로그인으로 후기를 작성해보세요.
           </p>
         </CardHeader>
-        <CardContent>
+        <CardContent className="space-y-4">
           <LoginButtons next={next || '/'} />
+
+          <div className="flex items-center gap-3">
+            <Separator className="flex-1" />
+            <span className="text-muted-foreground text-xs">또는</span>
+            <Separator className="flex-1" />
+          </div>
+
+          <EmailLoginForm next={next || '/'} />
         </CardContent>
       </Card>
     </div>

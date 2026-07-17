@@ -163,7 +163,7 @@ export function ReviewForm() {
           name="images"
           render={() => (
             <FormItem>
-              <FormLabel>사진 (최대 5장)</FormLabel>
+              <FormLabel>사진 (최대 10장)</FormLabel>
               <FormControl>
                 <Input
                   type="file"

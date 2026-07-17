@@ -26,7 +26,7 @@ export default async function WritePage() {
               후기 작성
             </h1>
             <p className="text-muted-foreground mt-2">
-              작성하신 후기는 관리자 승인 후 공개됩니다.
+              작성하신 후기는 제출 즉시 공개됩니다.
             </p>
           </div>
 

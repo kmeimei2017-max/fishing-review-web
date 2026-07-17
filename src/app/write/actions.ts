@@ -29,7 +29,7 @@ export async function submitReview(input: {
 
     return {
       success: true,
-      message: '후기가 제출되었습니다. 관리자 승인 후 공개됩니다.',
+      message: '후기가 등록되었습니다.',
       data: { reviewId: review.id },
     }
   } catch (error) {

@@ -8,6 +8,7 @@ import { createCachedReviewFetcher, getReviewWithDedup } from '@/lib/cache'
 import { ERROR_MESSAGES } from '@/lib/constants'
 import { logger } from '@/lib/logger'
 import { createClient } from '@/lib/supabase/server'
+import { createPublicClient } from '@/lib/supabase/public'
 import { mapRowToReview } from '@/lib/utils/review-mapper'
 import type { Review } from '@/types/review'
 import type { ReviewRow } from '@/types/database'
@@ -34,16 +35,17 @@ export interface ReviewListResult {
 
 /**
  * 후기 상세 조회 (내부 함수)
- * 캐싱 계층(unstable_cache)을 거치므로, 호출자의 로그인 여부와 무관하게
- * 항상 "공개(published)" 상태만 반환하도록 쿼리 자체에서 강제한다
- * (RLS만 믿지 않고 명시적으로 재확인하는 이중 방어).
+ * 캐싱 계층(unstable_cache)을 거치므로 쿠키(cookies())에 의존하지 않는
+ * 공개 클라이언트를 사용한다 (dynamic API는 캐시 스코프에서 사용 불가).
+ * 호출자의 로그인 여부와 무관하게 항상 "공개(published)" 상태만 반환하도록
+ * 쿼리 자체에서 강제한다 (RLS만 믿지 않고 명시적으로 재확인하는 이중 방어).
  *
  * @param reviewId - 후기 ID (uuid)
  * @returns Review 객체
  * @throws Error - 존재하지 않거나 비공개인 경우
  */
 async function fetchPublishedReview(reviewId: string): Promise<Review> {
-  const supabase = await createClient()
+  const supabase = createPublicClient()
 
   const { data, error } = await supabase
     .from('reviews')
@@ -218,8 +220,9 @@ export interface CreateReviewInput {
 
 /**
  * 새 후기 생성 (로그인 필요)
- * 항상 status: 'pending'으로 저장되며, author/author_id는 현재 로그인한 사용자 정보로
- * 서버에서 직접 채운다 (클라이언트가 임의로 다른 사용자 행세를 하거나 즉시 공개 처리하는 것을 방지).
+ * 관리자 승인 절차 없이 항상 status: 'published'로 즉시 공개된다 (임시 정책).
+ * author/author_id는 현재 로그인한 사용자 정보로 서버에서 직접 채운다
+ * (클라이언트가 임의로 다른 사용자 행세를 하는 것을 방지).
  *
  * @param input - 제목/내용/사진 URL 목록
  * @returns 생성된 Review 객체
@@ -250,7 +253,7 @@ export async function createReview(input: CreateReviewInput): Promise<Review> {
       images: input.images,
       author: authorName,
       author_id: user.id,
-      status: 'pending',
+      status: 'published',
     })
     .select('*')
     .single<ReviewRow>()

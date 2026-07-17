@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024 // 5MB
-const MAX_IMAGE_COUNT = 5
+const MAX_IMAGE_COUNT = 10
 
 /**
  * 후기 작성 폼(클라이언트) 스키마

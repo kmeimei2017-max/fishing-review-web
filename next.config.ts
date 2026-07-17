@@ -22,6 +22,11 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 's3.us-west-2.amazonaws.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'oybunknouypzajyhfpej.supabase.co',
+        pathname: '/storage/v1/object/public/**',
+      },
     ],
   },
   experimental: {
