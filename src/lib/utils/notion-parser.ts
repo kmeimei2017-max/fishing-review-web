@@ -1,6 +1,7 @@
 /**
- * Notion API 응답 데이터 파싱 및 변환 유틸리티
- * Notion 데이터 구조를 비즈니스 도메인 타입으로 변환
+ * Notion API 응답 데이터 파싱 및 변환 유틸리티 (1단계 레거시, 현재 미사용)
+ * Supabase 전환(2단계)으로 review.service.ts에서 더 이상 이 파일을 참조하지 않는다.
+ * ROADMAP.md 5단계의 별도 정리 작업 전까지 참고용으로만 남겨둔다.
  */
 
 import type {
@@ -8,17 +9,29 @@ import type {
   NotionFileItem,
   ReviewPageProperties,
 } from '@/types/notion'
-import type { Review, ReviewVisibility } from '@/types/review'
+import type { ReviewVisibilityValue } from '@/lib/constants'
 import { KOREAN_TO_VISIBILITY_MAP } from '@/lib/constants'
 
 /**
- * Notion 후기 페이지를 Review 객체로 변환
+ * 레거시 Notion 기반 후기 객체 (현재 Review 도메인 타입과는 무관, 참고용)
+ */
+interface LegacyNotionReview {
+  id: string
+  title: string
+  author: string
+  images: string[]
+  content: string
+  visibility: ReviewVisibilityValue
+}
+
+/**
+ * Notion 후기 페이지를 레거시 후기 객체로 변환 (현재 미사용)
  * @param page - Notion 후기 페이지
- * @returns 변환된 Review 객체
+ * @returns 변환된 레거시 후기 객체
  */
 export function transformNotionToReview(
   page: NotionPage & { properties: ReviewPageProperties }
-): Review {
+): LegacyNotionReview {
   const props = page.properties
 
   // null 체크와 기본값 처리
@@ -58,13 +71,13 @@ export function extractImageUrls(
 }
 
 /**
- * 한글 공개 여부값을 ReviewVisibility 타입으로 매핑
+ * 한글 공개 여부값을 공개 상태값으로 매핑
  * @param koreanVisibility - 한글 공개 여부값 (공개/비공개(작성중))
  * @returns 영문 공개 상태값
  */
 function mapKoreanVisibility(
   koreanVisibility: string | null | undefined
-): ReviewVisibility {
+): ReviewVisibilityValue {
   if (!koreanVisibility) {
     return 'draft'
   }
@@ -73,7 +86,7 @@ function mapKoreanVisibility(
     KOREAN_TO_VISIBILITY_MAP[
       koreanVisibility as keyof typeof KOREAN_TO_VISIBILITY_MAP
     ]
-  return (mappedVisibility as ReviewVisibility) || 'draft'
+  return (mappedVisibility as ReviewVisibilityValue) || 'draft'
 }
 
 /**

@@ -38,4 +38,6 @@ export const ERROR_MESSAGES = {
   NOTION_API_ERROR: 'Notion API 연결 오류가 발생했습니다.',
   INVALID_REVIEW_DATA: '유효하지 않은 후기 데이터입니다.',
   MISSING_REQUIRED_FIELD: '필수 필드가 누락되었습니다.',
+  DATABASE_ERROR: '데이터베이스 연결 오류가 발생했습니다.',
+  UNAUTHORIZED: '로그인이 필요합니다.',
 } as const

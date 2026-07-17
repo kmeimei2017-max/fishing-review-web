@@ -53,3 +53,6 @@ test-notion-*.js
 
 # Shrimp Task Manager
 shrimp_data/
+
+# Supabase CLI local cache
+supabase/.temp/

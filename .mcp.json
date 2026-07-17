@@ -22,7 +22,7 @@
       "command": "npx",
       "args": ["-y", "mcp-shrimp-task-manager"],
       "env": {
-        "DATA_DIR": "./shrimp_data",
+        "DATA_DIR": "C:/Users/user/OneDrive/Desktop/GYM/fishing-review-web/shrimp_data",
         "TEMPLATES_USE": "en",
         "ENABLE_GUI": "true"
       }

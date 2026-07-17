@@ -1,11 +1,12 @@
 /**
  * Next.js Middleware
- * API 라우트에 대한 Rate Limiting 적용
+ * API 라우트에 대한 Rate Limiting + 전체 라우트의 Supabase 세션 갱신
  */
 
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { checkRateLimit } from '@/lib/rate-limit'
+import { updateSession } from '@/lib/supabase/middleware'
 
 /**
  * Rate Limit 설정
@@ -71,13 +72,16 @@ export async function middleware(request: NextRequest) {
     return response
   }
 
-  // API 라우트가 아닌 경우 그대로 통과
-  return NextResponse.next()
+  // API 라우트가 아닌 경우 Supabase 세션 갱신
+  return updateSession(request)
 }
 
 /**
  * Middleware 적용 경로 설정
+ * 정적 파일(_next/static, _next/image, 이미지 등)을 제외한 모든 경로에 적용
  */
 export const config = {
-  matcher: ['/api/:path*'],
+  matcher: [
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+  ],
 }

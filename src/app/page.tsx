@@ -6,7 +6,7 @@ import { Pagination } from '@/components/review/pagination'
 import { SearchBar } from '@/components/review/search-bar'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
-  getReviewsFromNotion,
+  getPublishedReviews,
   searchReviews,
   type ReviewFilters,
 } from '@/lib/services/review.service'
@@ -36,7 +36,7 @@ async function ReviewGalleryContent({
 
   const { reviews, nextCursor, hasMore } = hasFilters
     ? await searchReviews(filters, 12, cursor)
-    : await getReviewsFromNotion(12, cursor)
+    : await getPublishedReviews(12, cursor)
 
   return (
     <div className="space-y-8">

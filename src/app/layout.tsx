@@ -3,6 +3,7 @@ import { Geist_Mono, Noto_Sans_KR } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/providers/theme-provider'
 import { Toaster } from '@/components/ui/sonner'
+import { Header } from '@/components/layout/header'
 
 // 한글 폰트 최적화: Noto Sans KR (Google Fonts)
 const notoSansKR = Noto_Sans_KR({
@@ -21,8 +22,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: '선상낚시 후기 게시판',
-  description:
-    '노션 기반 선상낚시 후기 게시판 - 배낚시 조황과 후기를 웹에서 확인하세요',
+  description: '선상낚시 후기 게시판 - 배낚시 조황과 후기를 웹에서 확인하세요',
 }
 
 export default function RootLayout({
@@ -39,6 +39,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Header />
           {children}
           <Toaster />
         </ThemeProvider>

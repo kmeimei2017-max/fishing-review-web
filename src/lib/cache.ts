@@ -1,6 +1,6 @@
 /**
  * Next.js 캐싱 유틸리티
- * unstable_cache를 사용한 Notion API 응답 캐싱 및 Request Deduplication 구현
+ * unstable_cache를 사용한 후기 조회 응답 캐싱 및 Request Deduplication 구현
  */
 
 import { unstable_cache } from 'next/cache'
@@ -25,7 +25,7 @@ const CACHE_CONFIG = {
  *
  * @example
  * ```typescript
- * const cachedFetcher = createCachedReviewFetcher(getReviewFromNotion)
+ * const cachedFetcher = createCachedReviewFetcher(getReviewById)
  * const review = await cachedFetcher(pageId)
  * ```
  */

@@ -22,6 +22,12 @@ const envSchema = z.object({
     .string()
     .min(1, 'NOTION_DATABASE_ID는 필수입니다')
     .length(32, 'NOTION_DATABASE_ID는 32자여야 합니다'),
+  NEXT_PUBLIC_SUPABASE_URL: z
+    .string()
+    .url('NEXT_PUBLIC_SUPABASE_URL은 올바른 URL이어야 합니다'),
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: z
+    .string()
+    .min(1, 'NEXT_PUBLIC_SUPABASE_ANON_KEY는 필수입니다'),
 })
 
 export const env = envSchema.parse({
@@ -31,6 +37,8 @@ export const env = envSchema.parse({
   NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
   NOTION_API_KEY: process.env.NOTION_API_KEY,
   NOTION_DATABASE_ID: process.env.NOTION_DATABASE_ID,
+  NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
 })
 
 export type Env = z.infer<typeof envSchema>
