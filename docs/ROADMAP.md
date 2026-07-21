@@ -2,6 +2,7 @@
 
 http://localhost:3000/
 https://fishing-review-web.vercel.app/
+http://localhost:54703?lang=en
 
 노션 기반 견적서 관리 시스템(`invoice-web`)을 기반으로 재구성한 선상낚시 후기 게시판 프로젝트입니다.
 
