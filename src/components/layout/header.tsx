@@ -8,6 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { SignOutButton } from '@/components/auth/signout-button'
 import { createClient } from '@/lib/supabase/server'
+import { Container } from '@/components/layout/container'
 import { PenLine } from 'lucide-react'
 
 export async function Header() {
@@ -25,7 +26,7 @@ export async function Header() {
 
   return (
     <header className="bg-background/80 sticky top-0 z-40 border-b backdrop-blur">
-      <div className="container mx-auto flex h-14 items-center justify-between px-4">
+      <Container className="flex h-14 items-center justify-between">
         <Link href="/" className="font-semibold">
           선상낚시 후기
         </Link>
@@ -51,7 +52,7 @@ export async function Header() {
             </Button>
           )}
         </div>
-      </div>
+      </Container>
     </header>
   )
 }
